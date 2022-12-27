@@ -4,6 +4,8 @@ import input.CredentialsInput;
 import movies.Movie;
 import platform.PlatformGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @JsonIgnoreProperties({"allowedMovies", "isPremium"})
@@ -18,6 +20,7 @@ public final class User {
     private ArrayList<Movie> ratedMovies = new ArrayList<Movie>();
 
     private ArrayList<Movie> allowedMovies = new ArrayList<>();
+    private ArrayList<Notification> notifications = new ArrayList<>();
 
     public User(final CredentialsInput credentials) {
         this.credentials = new CredentialsInput(credentials);
@@ -64,6 +67,11 @@ public final class User {
         this.allowedMovies = new ArrayList<Movie>();
         for (Movie movie : user.getAllowedMovies()) {
             this.allowedMovies.add(new Movie(movie));
+        }
+
+        this.notifications = new ArrayList<>(notifications);
+        for (Notification notification: user.getNotifications()) {
+            this.notifications.add(new Notification(notification));
         }
     }
     public CredentialsInput getCredentials() {
@@ -130,4 +138,11 @@ public final class User {
         this.allowedMovies = allowedMovies;
     }
 
+    public ArrayList<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(ArrayList<Notification> notifications) {
+        this.notifications = notifications;
+    }
 }

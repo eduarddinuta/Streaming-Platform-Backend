@@ -1,18 +1,6 @@
 package factories;
 
-import actions.ActionVisitor;
-import actions.BuyTokensAction;
-import actions.BuyPremiumAccountAction;
-import actions.ChangePageAction;
-import actions.FilterAction;
-import actions.LikeAction;
-import actions.LoginAction;
-import actions.PurchaseAction;
-import actions.RateAction;
-import actions.RegisterAction;
-import actions.SearchAction;
-import actions.SeeDetailsAction;
-import actions.WatchAction;
+import actions.*;
 
 
 import input.ActionInput;
@@ -65,6 +53,12 @@ public final class ActionFactory {
                     case "rate": return new RateAction(action.getRate());
                     default: throw new IllegalArgumentException("The action feature "
                             + action.getFeature() + " is not recognized.");
+                }
+            case "back" : return new BackAction();
+            case "database":
+                switch (action.getFeature()) {
+                    case "add": return new AddAction(action.getAddedMovie());
+                    case "delete": return new DeleteAction(action.getDeletedMovie());
                 }
             default:  throw new IllegalArgumentException("The action type "
                     + action.getType() + " is not recognized.");

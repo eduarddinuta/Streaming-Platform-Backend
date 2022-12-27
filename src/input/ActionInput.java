@@ -1,6 +1,7 @@
 package input;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import movies.Movie;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public final class ActionInput {
@@ -14,7 +15,9 @@ public final class ActionInput {
     private String count;
     private Double rate;
     private String objectType;
-
+    private String subscribedGenre;
+    private MovieInput addedMovie;
+    private String deletedMovie;
     public String getObjectType() {
         return objectType;
     }
@@ -93,5 +96,29 @@ public final class ActionInput {
 
     public void setRate(final Double rate) {
         this.rate = rate;
+    }
+
+    public String getSubscribedGenre() {
+        return subscribedGenre;
+    }
+
+    public void setSubscribedGenre(String subscribedGenre) {
+        this.subscribedGenre = subscribedGenre;
+    }
+
+    public MovieInput getAddedMovie() {
+        return addedMovie;
+    }
+
+    public void setAddedMovie(MovieInput addedMovie) {
+        this.addedMovie = addedMovie;
+    }
+
+    public String getDeletedMovie() {
+        return deletedMovie;
+    }
+
+    public void setDeletedMovie(String deletedMovie) {
+        this.deletedMovie = deletedMovie;
     }
 }

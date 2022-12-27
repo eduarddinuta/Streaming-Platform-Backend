@@ -2,6 +2,7 @@ package actions;
 
 import movies.Movie;
 import output.Output;
+import pages.ChangedPage;
 import pages.ConcretePage;
 import platform.PlatformGenerator;
 import users.User;
@@ -27,6 +28,8 @@ public final class SeeDetailsAction extends ActionVisitor {
 
         for (Movie movie: seenMovies) {
             if (movieName.equals(movie.getName())) {
+                PlatformGenerator.getChangedPages().add(new ChangedPage(page.getName(),
+                        PlatformGenerator.getMovies().get(0)));
                 page.setName("see details");
                 page.setAllowedPages(PlatformGenerator.getAllowedPagesTable().get("see details"));
                 page.setAllowedActions(PlatformGenerator.getAllowedActionsTable()

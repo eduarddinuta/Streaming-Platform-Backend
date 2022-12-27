@@ -7,6 +7,7 @@ import input.MovieInput;
 import input.UserInput;
 import movies.Movie;
 import output.Output;
+import pages.ChangedPage;
 import pages.ConcretePage;
 import users.User;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -23,7 +24,7 @@ public final class PlatformGenerator {
     private ArrayList<ActionInput> actions;
     private static ArrayList<User> users;
     private static ArrayList<Movie> movies;
-
+    private static ArrayList<ChangedPage> changedPages;
     private static HashMap<String, ArrayList<String>> allowedActionsTable = new HashMap<>();
     private static HashMap<String, ArrayList<String>> allowedPagesTable = new HashMap<>();
     private PlatformGenerator() {
@@ -53,6 +54,7 @@ public final class PlatformGenerator {
         this.actions = actionsInput;
         this.users = new ArrayList<>();
         this.movies = new ArrayList<>();
+        this.changedPages = new ArrayList<>();
         for (MovieInput movie: moviesInput) {
             this.movies.add(new Movie(movie.getName(), movie.getYear(),
                     movie.getDuration(), movie.getGenres(),
@@ -87,17 +89,17 @@ public final class PlatformGenerator {
      */
     public void buildAllowedActionsTable() {
         allowedActionsTable.put("homepage neautentificat",
-                new ArrayList<String>(Arrays.asList("change page")));
-        allowedActionsTable.put("login", new ArrayList<String>(Arrays.asList("login")));
-        allowedActionsTable.put("register", new ArrayList<String>(Arrays.asList("register")));
+                new ArrayList<String>(Arrays.asList("change page", "add", "delete", "back")));
+        allowedActionsTable.put("login", new ArrayList<String>(Arrays.asList("login", "add", "delete", "back")));
+        allowedActionsTable.put("register", new ArrayList<String>(Arrays.asList("register", "add", "delete", "back")));
         allowedActionsTable.put("homepage autentificat",
-                new ArrayList<String>(Arrays.asList("change page")));
+                new ArrayList<String>(Arrays.asList("change page", "add", "delete", "back")));
         allowedActionsTable.put("movies", new ArrayList<String>(Arrays.asList("change page",
-                "search", "filter")));
+                "search", "filter", "add", "delete", "back")));
         allowedActionsTable.put("see details", new ArrayList<String>(Arrays.asList("change page",
-                "purchase", "watch", "like", "rate")));
+                "purchase", "watch", "like", "rate", "add", "delete", "back")));
         allowedActionsTable.put("upgrades", new ArrayList<String>(Arrays.asList("change page",
-                "buy tokens", "buy premium account")));
+                "buy tokens", "buy premium account", "add", "delete", "back")));
         allowedActionsTable.put("logout", new ArrayList<String>());
     }
 
@@ -176,5 +178,13 @@ public final class PlatformGenerator {
 
     public static void setOutput(final ArrayNode output) {
         PlatformGenerator.output = output;
+    }
+
+    public static ArrayList<ChangedPage> getChangedPages() {
+        return changedPages;
+    }
+
+    public static void setChangedPages(ArrayList<ChangedPage> changedPages) {
+        PlatformGenerator.changedPages = changedPages;
     }
 }

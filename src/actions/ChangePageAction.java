@@ -2,6 +2,7 @@ package actions;
 
 import movies.Movie;
 import output.Output;
+import pages.ChangedPage;
 import pages.ConcretePage;
 import platform.PlatformGenerator;
 import users.User;
@@ -26,6 +27,7 @@ public final class ChangePageAction extends ActionVisitor {
 
         if (page.getAllowedPages().contains(pageName)) {
             if (pageName.equals("logout")) {
+                PlatformGenerator.setChangedPages(new ArrayList<>());
                 page.setName("homepage neautentificat");
                 page.setUser(null);
                 page.setAllowedPages(PlatformGenerator.getAllowedPagesTable()
@@ -35,7 +37,10 @@ public final class ChangePageAction extends ActionVisitor {
 
                 return;
             }
-
+            if (page.getUser() != null) {
+                PlatformGenerator.getChangedPages().add(new ChangedPage(page.getName(),
+                        PlatformGenerator.getMovies().get(0)));
+            }
             page.setName(pageName);
             page.setAllowedPages(PlatformGenerator.getAllowedPagesTable().get(pageName));
             page.setAllowedActions(PlatformGenerator.getAllowedActionsTable().get(pageName));
