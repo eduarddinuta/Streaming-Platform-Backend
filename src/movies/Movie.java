@@ -3,6 +3,7 @@ package movies;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 @JsonIgnoreProperties({"ratings"})
 public final class Movie {
@@ -51,6 +52,9 @@ public final class Movie {
             sum += givenRating;
         }
         DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+        dfs.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(dfs);
         df.setRoundingMode(RoundingMode.DOWN);
 
         rating = Double.parseDouble(df.format(sum / (double) ratings.size()));

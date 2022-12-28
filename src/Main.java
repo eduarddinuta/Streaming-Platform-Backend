@@ -21,7 +21,7 @@ public final class Main {
      */
     public static void main(final String[] args) throws IOException {
         File inputFile = new File(args[0]);
-        File outputFile = new File("results.out");
+        File outputFile = new File(args[1]);
         outputFile.createNewFile();
 
         ObjectMapper objectMapper = new ObjectMapper();

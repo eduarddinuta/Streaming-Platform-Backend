@@ -28,7 +28,7 @@ public class BackAction extends ActionVisitor{
         ActionInput action = new ActionInput();
         action.setType("change page");
         action.setPage(previous.getPage());
-
+        action.setBack(Boolean.TRUE);
         if (previous.getPage().equals("see details")) {
             action.setMovie(previous.getMovie().getName());
         }

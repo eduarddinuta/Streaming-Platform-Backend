@@ -7,9 +7,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-@JsonIgnoreProperties({"allowedMovies", "isPremium"})
-public final class User {
+@JsonIgnoreProperties({"allowedMovies", "isPremium", "subscribedGenres", "givenRatings"})
+public final class User implements ObserverObject{
     public static final int NUM_PREMIUM_MOVIES = 15;
     private CredentialsInput credentials;
     private int tokensCount = 0;
@@ -21,7 +23,8 @@ public final class User {
 
     private ArrayList<Movie> allowedMovies = new ArrayList<>();
     private ArrayList<Notification> notifications = new ArrayList<>();
-
+    private ArrayList<String> subscribedGenres = new ArrayList<>();
+    private HashMap<Movie, Double> givenRatings = new HashMap<>();
     public User(final CredentialsInput credentials) {
         this.credentials = new CredentialsInput(credentials);
 
@@ -69,11 +72,66 @@ public final class User {
             this.allowedMovies.add(new Movie(movie));
         }
 
-        this.notifications = new ArrayList<>(notifications);
+        this.notifications = new ArrayList<>();
         for (Notification notification: user.getNotifications()) {
             this.notifications.add(new Notification(notification));
         }
+
+        this.subscribedGenres = new ArrayList<>();
+        for (String genre: user.getSubscribedGenres()) {
+            this.subscribedGenres.add(genre);
+        }
+
+        this.givenRatings = new HashMap<>();
+        for (Map.Entry<Movie, Double> entry: givenRatings.entrySet()) {
+            this.givenRatings.put(entry.getKey(), entry.getValue());
+        }
     }
+
+    @Override
+    public void update(Movie newMovie, String message) {
+        if (newMovie.getName().equals("No recommendation")) {
+            notifications.add(new Notification(newMovie.getName(), message));
+            return;
+        }
+
+        boolean isBanned = false;
+        for (String country: newMovie.getCountriesBanned()) {
+            if (country.equals(credentials.getCountry())) {
+                isBanned = true;
+            }
+        }
+
+        if (isBanned) {
+            return;
+        }
+
+        allowedMovies.add(newMovie);
+        ArrayList<String> genres = newMovie.getGenres();
+        for (String genre: genres) {
+            if (subscribedGenres.contains(genre) || message.equals("Recommendation")) {
+                notifications.add(new Notification(newMovie.getName(), message));
+                return;
+            }
+        }
+    }
+
+    public HashMap<Movie, Double> getGivenRatings() {
+        return givenRatings;
+    }
+
+    public void setGivenRatings(HashMap<Movie, Double> givenRatings) {
+        this.givenRatings = givenRatings;
+    }
+
+    public ArrayList<String> getSubscribedGenres() {
+        return subscribedGenres;
+    }
+
+    public void setSubscribedGenres(ArrayList<String> subscribedGenres) {
+        this.subscribedGenres = subscribedGenres;
+    }
+
     public CredentialsInput getCredentials() {
         return credentials;
     }
@@ -145,4 +203,5 @@ public final class User {
     public void setNotifications(ArrayList<Notification> notifications) {
         this.notifications = notifications;
     }
+
 }

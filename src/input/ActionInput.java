@@ -1,9 +1,11 @@
 package input;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import movies.Movie;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties({"back"})
 public final class ActionInput {
     private String type;
     private String page;
@@ -18,6 +20,16 @@ public final class ActionInput {
     private String subscribedGenre;
     private MovieInput addedMovie;
     private String deletedMovie;
+    private Boolean back = Boolean.FALSE;
+
+    public Boolean getBack() {
+        return back;
+    }
+
+    public void setBack(Boolean back) {
+        this.back = back;
+    }
+
     public String getObjectType() {
         return objectType;
     }

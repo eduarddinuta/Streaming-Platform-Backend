@@ -112,7 +112,7 @@ public final class Test {
      */
     public static void main(final String[] argv) {
         runTests();
-        preTestCleanUp();
+        //preTestCleanUp();
         System.exit(0);
     }
 
@@ -137,7 +137,7 @@ public final class Test {
         for (final File testFile : Objects.requireNonNull(TEST_INPUTS_FILE.listFiles())) {
             String testFileName = testFile.getName();
 
-            preTestCleanUp();
+            //preTestCleanUp();
 
             final String[] testArgv = createTestArgv(testFile, testFileName);
             final Future<Object> future = createTimerTask(testArgv);
@@ -206,7 +206,7 @@ public final class Test {
     private static String[] createTestArgv(final File testFile, String testFileName) {
         List<String> listArgv = new ArrayList<>();
         listArgv.add(testFile.getAbsolutePath());
-        listArgv.add(CHECKER_RESOURCES_FOLDER + REF_FOLDER + testFileName);
+        listArgv.add(OUT_FILE);
         String[] argv = new String[0];
         return listArgv.toArray(argv);
     }

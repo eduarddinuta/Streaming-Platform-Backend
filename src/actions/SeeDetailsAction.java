@@ -11,10 +11,11 @@ import java.util.ArrayList;
 
 public final class SeeDetailsAction extends ActionVisitor {
     private String movieName;
-
-    public SeeDetailsAction(final String movieName) {
+    private Boolean back;
+    public SeeDetailsAction(final String movieName, final Boolean back) {
         this.movieName = movieName;
         actionName = "change page";
+        this.back = back;
     }
 
     /**
@@ -29,7 +30,7 @@ public final class SeeDetailsAction extends ActionVisitor {
         for (Movie movie: seenMovies) {
             if (movieName.equals(movie.getName())) {
                 PlatformGenerator.getChangedPages().add(new ChangedPage(page.getName(),
-                        PlatformGenerator.getMovies().get(0)));
+                        seenMovies.get(0)));
                 page.setName("see details");
                 page.setAllowedPages(PlatformGenerator.getAllowedPagesTable().get("see details"));
                 page.setAllowedActions(PlatformGenerator.getAllowedActionsTable()

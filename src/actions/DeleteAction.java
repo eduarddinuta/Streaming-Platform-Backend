@@ -5,6 +5,7 @@ import movies.Movie;
 import output.Output;
 import pages.ConcretePage;
 import platform.PlatformGenerator;
+import users.User;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,8 @@ public class DeleteAction extends ActionVisitor{
         for (Movie movie: movies) {
             if (movie.getName().equals(removedMovie)) {
                 movies.remove(movie);
+                for (User user: PlatformGenerator.getUsers())
+                    user.update(movie, "DELETE");
                 return;
             }
         }

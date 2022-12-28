@@ -35,9 +35,9 @@ public final class ActionFactory {
         switch (action.getType()) {
             case "change page":
                 if (action.getMovie() == null) {
-                    return new ChangePageAction(action.getPage());
+                    return new ChangePageAction(action.getPage(), action.getBack());
                 } else {
-                    return new SeeDetailsAction(action.getMovie());
+                    return new SeeDetailsAction(action.getMovie(), action.getBack());
                 }
             case "on page":
                 switch (action.getFeature()) {
@@ -60,6 +60,8 @@ public final class ActionFactory {
                     case "add": return new AddAction(action.getAddedMovie());
                     case "delete": return new DeleteAction(action.getDeletedMovie());
                 }
+            case "subscribe" : return new SubscribeAction(action.getSubscribedGenre());
+            case "recommend" : return new RecommendAction();
             default:  throw new IllegalArgumentException("The action type "
                     + action.getType() + " is not recognized.");
         }

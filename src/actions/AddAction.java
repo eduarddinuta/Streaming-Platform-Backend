@@ -5,6 +5,7 @@ import movies.Movie;
 import output.Output;
 import pages.ConcretePage;
 import platform.PlatformGenerator;
+import users.User;
 
 import java.util.ArrayList;
 
@@ -29,5 +30,10 @@ public class AddAction extends  ActionVisitor{
             }
         }
         movies.add(addedMovie);
+        for (User user: PlatformGenerator.getUsers()) {
+            if (!addedMovie.getCountriesBanned().contains(user.getCredentials().getCountry())) {
+                user.update(addedMovie, "ADD");
+            }
+        }
     }
 }

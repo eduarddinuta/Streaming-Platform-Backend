@@ -33,13 +33,21 @@ public final class RateAction extends ActionVisitor {
             return;
         }
 
-        currentMovie.setNumRatings(currentMovie.getNumRatings() + 1);
-        currentMovie.getRatings().add(rating);
+        if (!currentUser.getRatedMovies().contains(currentMovie)) {
+            currentMovie.setNumRatings(currentMovie.getNumRatings() + 1);
+            currentMovie.getRatings().add(rating);
+            currentUser.getGivenRatings().put(currentMovie, rating);
+            currentUser.getRatedMovies().add(currentMovie);
+        } else {
+            currentMovie.getRatings().remove(currentUser.getGivenRatings().get(currentMovie));
+            currentMovie.getRatings().add(rating);
+            currentUser.getGivenRatings().put(currentMovie, rating);
+        }
         currentMovie.calculateAverageRating();
-        currentUser.getRatedMovies().add(currentMovie);
 
         ArrayList<Movie> outputMovies = new ArrayList<>();
         outputMovies.add(new Movie(currentMovie));
+
         PlatformGenerator.getOutput().addPOJO(new Output(outputMovies, new User(currentUser)));
     }
 

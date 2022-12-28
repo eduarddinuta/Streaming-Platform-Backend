@@ -11,8 +11,10 @@ import java.util.ArrayList;
 
 public final class ChangePageAction extends ActionVisitor {
     private String pageName;
-    public ChangePageAction(final String pageName) {
+    private Boolean back;
+    public ChangePageAction(final String pageName, final Boolean back) {
         this.pageName = pageName;
+        this.back = back;
         actionName = "change page";
     }
 
@@ -25,7 +27,7 @@ public final class ChangePageAction extends ActionVisitor {
     @Override
     public void visit(final ConcretePage page) {
 
-        if (page.getAllowedPages().contains(pageName)) {
+        if (page.getAllowedPages().contains(pageName) || back) {
             if (pageName.equals("logout")) {
                 PlatformGenerator.setChangedPages(new ArrayList<>());
                 page.setName("homepage neautentificat");
@@ -37,9 +39,13 @@ public final class ChangePageAction extends ActionVisitor {
 
                 return;
             }
-            if (page.getUser() != null) {
+            if (page.getUser() != null && !back) {
+                Movie movie = null;
+                if (page.getSeenMovies().size() > 0) {
+                    movie = page.getSeenMovies().get(0);
+                }
                 PlatformGenerator.getChangedPages().add(new ChangedPage(page.getName(),
-                        PlatformGenerator.getMovies().get(0)));
+                        movie));
             }
             page.setName(pageName);
             page.setAllowedPages(PlatformGenerator.getAllowedPagesTable().get(pageName));
