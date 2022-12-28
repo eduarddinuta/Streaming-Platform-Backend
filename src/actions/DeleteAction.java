@@ -1,6 +1,5 @@
 package actions;
 
-import input.MovieInput;
 import movies.Movie;
 import output.Output;
 import pages.ConcretePage;
@@ -9,22 +8,23 @@ import users.User;
 
 import java.util.ArrayList;
 
-public class DeleteAction extends ActionVisitor{
+public final class DeleteAction extends ActionVisitor {
     private String removedMovie;
 
-    public DeleteAction(String movie) {
+    public DeleteAction(final String movie) {
         this.removedMovie = movie;
         actionName = "delete";
     }
 
     @Override
-    public void visit(ConcretePage page) {
+    public void visit(final ConcretePage page) {
         ArrayList<Movie> movies = PlatformGenerator.getMovies();
         for (Movie movie: movies) {
             if (movie.getName().equals(removedMovie)) {
                 movies.remove(movie);
-                for (User user: PlatformGenerator.getUsers())
+                for (User user: PlatformGenerator.getUsers()) {
                     user.update(movie, "DELETE");
+                }
                 return;
             }
         }

@@ -93,15 +93,20 @@ public final class PlatformGenerator {
      */
     public void buildAllowedActionsTable() {
         allowedActionsTable.put("homepage neautentificat",
-                new ArrayList<String>(Arrays.asList("change page", "add", "delete", "back", "recommend")));
-        allowedActionsTable.put("login", new ArrayList<String>(Arrays.asList("login", "add", "delete", "back", "recommend")));
-        allowedActionsTable.put("register", new ArrayList<String>(Arrays.asList("register", "add", "delete", "back", "recommend")));
+                new ArrayList<String>(Arrays.asList("change page", "add", "delete", "back",
+                        "recommend")));
+        allowedActionsTable.put("login", new ArrayList<String>(Arrays.asList("login", "add",
+                "delete", "back", "recommend")));
+        allowedActionsTable.put("register", new ArrayList<String>(Arrays.asList("register", "add",
+                "delete", "back", "recommend")));
         allowedActionsTable.put("homepage autentificat",
-                new ArrayList<String>(Arrays.asList("change page", "add", "delete", "back", "recommend")));
+                new ArrayList<String>(Arrays.asList("change page", "add", "delete",
+                        "back", "recommend")));
         allowedActionsTable.put("movies", new ArrayList<String>(Arrays.asList("change page",
                 "search", "filter", "add", "delete", "back", "recommend")));
         allowedActionsTable.put("see details", new ArrayList<String>(Arrays.asList("change page",
-                "purchase", "watch", "like", "rate", "add", "delete", "back", "subscribe", "recommend")));
+                "purchase", "watch", "like", "rate", "add", "delete", "back", "subscribe",
+                "recommend")));
         allowedActionsTable.put("upgrades", new ArrayList<String>(Arrays.asList("change page",
                 "buy tokens", "buy premium account", "add", "delete", "back", "recommend")));
         allowedActionsTable.put("logout", new ArrayList<String>());
@@ -188,7 +193,7 @@ public final class PlatformGenerator {
         return changedPages;
     }
 
-    public static void setChangedPages(ArrayList<ChangedPage> changedPages) {
+    public static void setChangedPages(final ArrayList<ChangedPage> changedPages) {
         PlatformGenerator.changedPages = changedPages;
     }
 }

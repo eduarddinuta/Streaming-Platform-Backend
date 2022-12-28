@@ -9,11 +9,11 @@ import users.User;
 
 import java.util.ArrayList;
 
-public class AddAction extends  ActionVisitor{
+public final class AddAction extends  ActionVisitor {
 
     private Movie addedMovie;
 
-    public AddAction(MovieInput movie) {
+    public AddAction(final MovieInput movie) {
         this.addedMovie = new Movie(new Movie(movie.getName(), movie.getYear(),
                 movie.getDuration(), movie.getGenres(),
                 movie.getActors(), movie.getCountriesBanned()));
@@ -21,7 +21,7 @@ public class AddAction extends  ActionVisitor{
     }
 
     @Override
-    public void visit(ConcretePage page) {
+    public void visit(final ConcretePage page) {
         ArrayList<Movie> movies = PlatformGenerator.getMovies();
         for (Movie movie: movies) {
             if (movie.getName().equals(addedMovie.getName())) {
@@ -33,6 +33,7 @@ public class AddAction extends  ActionVisitor{
         for (User user: PlatformGenerator.getUsers()) {
             if (!addedMovie.getCountriesBanned().contains(user.getCredentials().getCountry())) {
                 user.update(addedMovie, "ADD");
+                user.getAllowedMovies().add(addedMovie);
             }
         }
     }

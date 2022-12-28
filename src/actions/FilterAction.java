@@ -54,7 +54,6 @@ public final class FilterAction extends ActionVisitor {
             String durationSort = filters.getSort().getDuration();
             int ratingSign = setSortDirection(filters.getSort().getRating());
             int durationSign = setSortDirection(filters.getSort().getDuration());
-            
             Collections.sort(seenMovies, (o1, o2) -> {
                 if (durationSort != null && o1.getDuration() != o2.getDuration()) {
                     return durationSign * (o1.getDuration() - o2.getDuration());

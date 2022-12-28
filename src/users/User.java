@@ -5,13 +5,12 @@ import movies.Movie;
 import platform.PlatformGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 @JsonIgnoreProperties({"allowedMovies", "isPremium", "subscribedGenres", "givenRatings"})
-public final class User implements ObserverObject{
+public final class User implements ObserverObject {
     public static final int NUM_PREMIUM_MOVIES = 15;
     private CredentialsInput credentials;
     private int tokensCount = 0;
@@ -88,25 +87,20 @@ public final class User implements ObserverObject{
         }
     }
 
+    /**
+     * Adds a new notification to the user's notifications array
+     * if the current user is subscribed to one of the movie's genres
+     * or adds a recommendation to a premium user at the end of the actions
+     * @param newMovie - added or removed movie
+     * @param message - notification message
+     */
     @Override
-    public void update(Movie newMovie, String message) {
+    public void update(final Movie newMovie, final String message) {
         if (newMovie.getName().equals("No recommendation")) {
             notifications.add(new Notification(newMovie.getName(), message));
             return;
         }
 
-        boolean isBanned = false;
-        for (String country: newMovie.getCountriesBanned()) {
-            if (country.equals(credentials.getCountry())) {
-                isBanned = true;
-            }
-        }
-
-        if (isBanned) {
-            return;
-        }
-
-        allowedMovies.add(newMovie);
         ArrayList<String> genres = newMovie.getGenres();
         for (String genre: genres) {
             if (subscribedGenres.contains(genre) || message.equals("Recommendation")) {
@@ -120,7 +114,7 @@ public final class User implements ObserverObject{
         return givenRatings;
     }
 
-    public void setGivenRatings(HashMap<Movie, Double> givenRatings) {
+    public void setGivenRatings(final HashMap<Movie, Double> givenRatings) {
         this.givenRatings = givenRatings;
     }
 
@@ -128,7 +122,7 @@ public final class User implements ObserverObject{
         return subscribedGenres;
     }
 
-    public void setSubscribedGenres(ArrayList<String> subscribedGenres) {
+    public void setSubscribedGenres(final ArrayList<String> subscribedGenres) {
         this.subscribedGenres = subscribedGenres;
     }
 
@@ -200,7 +194,7 @@ public final class User implements ObserverObject{
         return notifications;
     }
 
-    public void setNotifications(ArrayList<Notification> notifications) {
+    public void setNotifications(final ArrayList<Notification> notifications) {
         this.notifications = notifications;
     }
 

@@ -24,15 +24,16 @@ public final class WatchAction extends ActionVisitor {
         User currentUser = page.getUser();
         Movie currentMovie = page.getSeenMovies().get(0);
         ArrayList<Movie> purchasedMovies = currentUser.getPurchasedMovies();
+        if (currentUser.getWatchedMovies().contains(currentMovie)) {
+            return;
+        }
 
         if (!purchasedMovies.contains(currentMovie)) {
             PlatformGenerator.getOutput().addPOJO(new Output("Error"));
             return;
         }
 
-        if (!currentUser.getWatchedMovies().contains(currentMovie)) {
-            currentUser.getWatchedMovies().add(currentMovie);
-        }
+        currentUser.getWatchedMovies().add(currentMovie);
 
         ArrayList<Movie> outputMovies = new ArrayList<>();
         outputMovies.add(new Movie(currentMovie));

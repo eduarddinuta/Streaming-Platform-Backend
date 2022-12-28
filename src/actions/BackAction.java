@@ -9,14 +9,14 @@ import platform.PlatformGenerator;
 
 import java.util.ArrayList;
 
-public class BackAction extends ActionVisitor{
+public final class BackAction extends ActionVisitor {
 
     public BackAction() {
         actionName = "back";
     }
 
     @Override
-    public void visit(ConcretePage page) {
+    public void visit(final ConcretePage page) {
         ArrayList<ChangedPage> pageStack = PlatformGenerator.getChangedPages();
         if (pageStack.size() == 0) {
             PlatformGenerator.getOutput().addPOJO(new Output("Error"));

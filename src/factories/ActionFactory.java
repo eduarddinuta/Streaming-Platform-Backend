@@ -1,8 +1,23 @@
 package factories;
 
-import actions.*;
-
-
+import actions.ActionVisitor;
+import actions.AddAction;
+import actions.BackAction;
+import actions.BuyPremiumAccountAction;
+import actions.BuyTokensAction;
+import actions.ChangePageAction;
+import actions.DeleteAction;
+import actions.FilterAction;
+import actions.LikeAction;
+import actions.LoginAction;
+import actions.PurchaseAction;
+import actions.RateAction;
+import actions.RecommendAction;
+import actions.RegisterAction;
+import actions.SearchAction;
+import actions.SeeDetailsAction;
+import actions.SubscribeAction;
+import actions.WatchAction;
 import input.ActionInput;
 
 public final class ActionFactory {
@@ -59,6 +74,8 @@ public final class ActionFactory {
                 switch (action.getFeature()) {
                     case "add": return new AddAction(action.getAddedMovie());
                     case "delete": return new DeleteAction(action.getDeletedMovie());
+                    default: throw new IllegalArgumentException("The action feature "
+                            + action.getFeature() + " is not recognized.");
                 }
             case "subscribe" : return new SubscribeAction(action.getSubscribedGenre());
             case "recommend" : return new RecommendAction();

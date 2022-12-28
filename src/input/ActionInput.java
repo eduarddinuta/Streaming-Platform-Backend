@@ -2,7 +2,6 @@ package input;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import movies.Movie;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties({"back"})
@@ -26,7 +25,7 @@ public final class ActionInput {
         return back;
     }
 
-    public void setBack(Boolean back) {
+    public void setBack(final Boolean back) {
         this.back = back;
     }
 
@@ -114,7 +113,7 @@ public final class ActionInput {
         return subscribedGenre;
     }
 
-    public void setSubscribedGenre(String subscribedGenre) {
+    public void setSubscribedGenre(final String subscribedGenre) {
         this.subscribedGenre = subscribedGenre;
     }
 
@@ -122,7 +121,7 @@ public final class ActionInput {
         return addedMovie;
     }
 
-    public void setAddedMovie(MovieInput addedMovie) {
+    public void setAddedMovie(final MovieInput addedMovie) {
         this.addedMovie = addedMovie;
     }
 
@@ -130,7 +129,7 @@ public final class ActionInput {
         return deletedMovie;
     }
 
-    public void setDeletedMovie(String deletedMovie) {
+    public void setDeletedMovie(final String deletedMovie) {
         this.deletedMovie = deletedMovie;
     }
 }
