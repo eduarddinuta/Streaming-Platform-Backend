@@ -66,6 +66,7 @@ public final class ActionFactory {
                     case "watch": return new WatchAction();
                     case "like": return new LikeAction();
                     case "rate": return new RateAction(action.getRate());
+                    case "subscribe" : return new SubscribeAction(action.getSubscribedGenre());
                     default: throw new IllegalArgumentException("The action feature "
                             + action.getFeature() + " is not recognized.");
                 }
@@ -77,7 +78,6 @@ public final class ActionFactory {
                     default: throw new IllegalArgumentException("The action feature "
                             + action.getFeature() + " is not recognized.");
                 }
-            case "subscribe" : return new SubscribeAction(action.getSubscribedGenre());
             case "recommend" : return new RecommendAction();
             default:  throw new IllegalArgumentException("The action type "
                     + action.getType() + " is not recognized.");
